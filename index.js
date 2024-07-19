@@ -8,7 +8,7 @@ const { router } = require('./router')
 const PORT = process.env.PORT || 3000
 const MONGODDBB = process.env.MONGODDBB || 'mongodb://127.0.0.1:27017/car-swap'
 
-const conectar = async () => await mongoose.connect(MONGODDBB)
+const conectar = async () => await mongoose.connect('mongodb+srv://admin:admin@cluster0.pfirhf7.mongodb.net/car-swap')
                 .then(() => console.log('MONGO'))
                 .catch(err => console.log(err))
 

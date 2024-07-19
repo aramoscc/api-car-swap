@@ -1,10 +1,26 @@
 
 const express = require('express')
-const { getMarcas, getModelosPorMarca, getMarcasFicha, getModelosFicha, getFichasPorModelo, getNombreVersiones, getFichaPorId, getPlanes, getMenu, getPrecios, getKilometros, iniciarSesion, registrarse } = require('./controller')
+const { getMarcas, getModelosPorMarca, getMarcasFicha, getModelosFicha, getFichasPorModelo, getNombreVersiones, getFichaPorId, getPlanes, getMenu, getPrecios, getKilometros, iniciarSesion, registrarse, getCambios, getColores, getCombustibles, getEtiquetas, getCarrocerias, getMisAnuncios, buscarAnuncios, postAnuncio, deleteMiAnuncio, deleteFavoritos, getFavoritos, deleteUsuario, putUsuario, getFicha, postFavoritos } = require('./controller')
+const { get } = require('mongoose')
 const router = express.Router()
 
 router.route('/marcas')
     .get(getMarcas)
+
+router.route('/cambios')
+    .get(getCambios)
+
+router.route('/colores')
+    .get(getColores)
+
+router.route('/combustibles')
+    .get(getCombustibles)
+
+router.route('/etiquetas')
+    .get(getEtiquetas)
+
+router.route('/carrocerias')
+    .get(getCarrocerias)
 
 router.route('/modelos/:id_marca')
     .get(getModelosPorMarca)
@@ -41,6 +57,33 @@ router.route('/login')
 
 router.route('/registro')
     .post(registrarse)
+
+router.route('/publicar')
+    .post(postAnuncio)
+
+router.route('/mis-anuncios/:id_usuario')
+    .get(getMisAnuncios)
+
+router.route('/anuncios')
+    .post(buscarAnuncios)
+
+router.route('/anuncio/delete/:id_anuncio')
+    .delete(deleteMiAnuncio)
+
+router.route('/favorito/delete/:id_favorito')
+    .delete(deleteFavoritos)
+
+router.route('/favoritos/:id_usuario')
+    .get(getFavoritos)
+
+router.route('/favoritos')
+    .post(postFavoritos)
+
+router.route('/usuario/delete/:id_usuario')
+    .delete(deleteUsuario)
+
+router.route('/usuario/update')
+    .delete(putUsuario)
 
 router.all('*' , (req, res, next) => {
 

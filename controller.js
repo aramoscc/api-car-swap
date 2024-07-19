@@ -1,4 +1,4 @@
-const { Marca, Modelo, Ficha, Plan, Menu, Precio, Kilometraje, Usuario } = require("./models")
+const { Marca, Modelo, Ficha, Plan, Menu, Precio, Kilometraje, Usuario, Color, Etiqueta, Cambio, Combustible, Carroceria, Anuncio, Favorito } = require("./models")
 
 const getMarcas = async (req, res, next) => {
 
@@ -248,6 +248,269 @@ const iniciarSesion = async (req, res, next) => {
 
 }
 
+const putUsuario = async (req, res, next) => {
+
+    const {_id, nombre, correo, password} = req.body
+
+    try {
+        
+        const usuario = await Usuario.findByIdAndUpdate(_id, {nombre, correo, password})
+
+        res.json(usuario)
+
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const deleteUsuario = async (req, res, next) => {
+
+    const {id_usuario} = req.params
+
+    try {
+        
+        await Usuario.findByIdAndDelete(id_usuario)
+
+        res.json(true)
+
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const getColores = async (req, res, next) => {
+
+    try {
+
+        const colores = await Color.find()
+
+        res.json(colores)
+        
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const getEtiquetas = async (req, res, next) => {
+
+    try {
+
+        const etiquetas = await Etiqueta.find()
+
+        res.json(etiquetas)
+        
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const getCambios = async (req, res, next) => {
+
+    try {
+
+        const cambios = await Cambio.find()
+
+        res.json(cambios)
+        
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const getCombustibles = async (req, res, next) => {
+
+    try {
+
+        const combustibles = await Combustible.find()
+
+        res.json(combustibles)
+        
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const getCarrocerias = async (req, res, next) => {
+
+    try {
+
+        const carrocerias = await Carroceria.find()
+
+        res.json(carrocerias)
+        
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const postAnuncio = async (req, res, next) => {
+
+    const {...datos} = req.body
+
+    console.log('hola')
+
+    try {
+
+        const nuevoAnuncio = new Anuncio(datos)
+
+        await nuevoAnuncio.save()
+
+        res.json('OK')
+
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const postFavoritos = async (req, res, next) => {
+
+    const {...datos} = req.body
+
+    try {
+
+        const nuevoFavorito = new Favorito(datos)
+
+        await nuevoFavorito.save()
+
+        res.json('OK')
+        
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const getMisAnuncios = async (req, res, next) => {
+
+    const {id_usuario} = req.params
+
+    try {
+
+        const anuncios = await Anuncio.find({id_usuario})
+
+        res.json(anuncios)
+        
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const buscarAnuncios = async (req, res, next) => {
+
+    const {id_usuario, marca, modelo, color, etiqueta, combustible, cambio, carroceria, anio_matriculacion , kilometros, precio, matricula} =  req.body 
+
+    const query = {
+        ...(id_usuario && { id_usuario }),
+        ...(marca && { marca }),
+        ...(modelo && { modelo }),
+        ...(color && { color }),
+        ...(etiqueta && { etiqueta }),
+        ...(combustible && { combustible }),
+        ...(cambio && { cambio }),
+        ...(carroceria && { carroceria }),
+        ...(anio_matriculacion && { anio_matriculacion }),
+        ...(kilometros && { kilometros }),
+        ...(precio && { precio }),
+        ...(matricula && { matricula })
+    };
+    
+    try {
+
+        const anuncios = await Anuncio.find({ marca: { $regex: marca, $options: 'i' } })
+
+        res.json(anuncios)
+        
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const getFavoritos = async (req, res, next) => {
+
+    const {id_usuario} = req.params
+
+    try {
+
+        const favoritos = await Favorito.find({id_usuario})
+
+        res.json(favoritos)
+        
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const deleteFavoritos = async (req, res, next) => {
+
+    const {id_favorito} = req.params
+
+    try {
+
+        await Favorito.findByIdAndDelete(id_favorito)
+
+        res.json(true)
+        
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
+const deleteMiAnuncio = async (req, res, next) => {
+
+    const {id_anuncio} = req.params
+
+    try {
+
+        await Anuncio.findByIdAndDelete(id_anuncio)
+
+        res.json(true)
+        
+    } catch (error) {
+
+        next({statusText : error.message})
+        
+    }
+
+}
+
 module.exports = {
     getMarcas,
     getModelosPorMarca,
@@ -261,5 +524,19 @@ module.exports = {
     getPrecios,
     getKilometros,
     registrarse,
-    iniciarSesion
+    iniciarSesion,
+    getCambios, 
+    getColores, 
+    getCombustibles, 
+    getEtiquetas,
+    getCarrocerias,
+    postAnuncio,
+    getMisAnuncios,
+    buscarAnuncios, 
+    getFavoritos, 
+    deleteFavoritos,
+    deleteMiAnuncio,
+    putUsuario,
+    deleteUsuario,
+    postFavoritos
 }

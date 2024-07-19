@@ -109,15 +109,101 @@ const usuariosSchema = new Schema(
     }
 )
 
-// const busquedasSchema = new Schema(
-//     {
-//         id_usuario : String,
-//         filtros : {
-//             type : [Schema.Types.Mixed],
-//             default : []
-//         }
-//     }
-// )
+const coloresSchema = new Schema(
+    {
+        nombre : String
+    },
+    {
+        collection : "colores",
+        versionKey : false
+    }
+)
+
+const cambiosSchema = new Schema(
+    {
+        nombre : String
+    },
+    {
+        collection : "cambios",
+        versionKey : false
+    }
+)
+
+const combustiblesSchema = new Schema(
+    {
+        nombre : String
+    },
+    {
+        collection : "combustibles",
+        versionKey : false
+    }
+)
+
+const etiquetasSchema = new Schema(
+    {
+        nombre : String
+    },
+    {
+        collection : "etiquetas",
+        versionKey : false
+    }
+)
+
+const carroceriasSchema = new Schema(
+    {
+        nombre : String
+    },
+    {
+        collection : "carrocerias",
+        versionKey : false
+    }
+)
+
+const anunciosSchema = new Schema(
+    {
+        id_usuario : String,
+        marca : String,
+        modelo : String,
+        color : String,
+        etiqueta : String,
+        combustible : String,
+        cambio : String,
+        carroceria : String,
+        anio_matriculacion : Number,
+        kilometros : String,
+        precio : String,
+        matricula : String,
+        img: String,
+        version : String
+    },
+    {
+        collection : "anuncios",
+        versionKey : false
+    }
+)
+
+const favoritosSchema = new Schema(
+    {
+        id_usuario : String,
+        marca : String,
+        modelo : String,
+        color : String,
+        etiqueta : String,
+        combustible : String,
+        cambio : String,
+        carroceria : String,
+        anio_matriculacion : Number,
+        kilometros : String,
+        precio : String,
+        matricula : String,
+        img: String,
+        version : String
+    },
+    {
+        collection : "favoritos",
+        versionKey : false
+    }
+)
 
 module.exports = {
     modelosSchema,
@@ -127,5 +213,12 @@ module.exports = {
     menuSchema,
     preciosSchema,
     kilometrosSchema,
-    usuariosSchema
+    usuariosSchema,
+    coloresSchema,
+    cambiosSchema,
+    combustiblesSchema,
+    etiquetasSchema,
+    carroceriasSchema,
+    anunciosSchema,
+    favoritosSchema
 }
